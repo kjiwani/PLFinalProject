@@ -3,12 +3,11 @@ import ply.yacc as yacc
 # Get the token map from the lexer.  This is required.
 from lex import tokens
 
-DEBUG = True
+DEBUG = False
 
 # Namespace & built-in functions
 
 name = {}
-let_dict = {} 
 
 global ast
 ast = []
@@ -79,14 +78,14 @@ name['print'] = _print
 #  Evaluation functions
 
 def lisp_eval(simb, items):
-#    if simb in name:
-#        return call(name[simb], eval_lists(items))
-#    else:
-    return [simb] + items
+    if simb in name:
+        return call(name[simb], eval_lists(items))
+    else:
+       return [simb] + items
 
 def call(f, l):
     try:
-        return f(eval_lists(l))
+        return f(eval_lists(l))  
     except TypeError:
         return f
 
@@ -130,7 +129,7 @@ def lisp_str(l):
 def p_exp_atom(p):
     'exp : atom'
     p[0] = p[1]
-    
+
 def p_exp_qlist(p):
     'exp : quoted_list'
     p[0] = p[1]
@@ -183,11 +182,12 @@ def p_item_empty(p):
 def p_call(p):
     'call : LPAREN SIMB items RPAREN'
     global ast
-    if DEBUG: print "Calling", p[2], "with", p[3] 
-    #p[0] = lisp_eval(p[2], p[3])
+    if DEBUG: print "Calling", p[2], "with", p[3]
+    #if isinstance(p[3], list) and isinstance(p[3][0], list) and p[3][0][0] == "'":
+        #p[3] = [["quote"] + [p[3][0][1:]]]
     ast = [p[2]] + [i for i in p[3]]
-    print "ast is: ", ast
     p[0] = ast
+    #p[0] = lisp_eval(p[2], p[3])
 
 def p_atom_simbol(p):
     'atom : SIMB'
@@ -226,7 +226,7 @@ def p_error(p):
     print "Syntax error!! ",p
 
 # Build the parser
-# Use this if you want to build the parser using SLR instead of LALRf
+# Use this if you want to build the parser using SLR instead of LALR
 # yacc.yacc(method="SLR")
 yacc.yacc()
 

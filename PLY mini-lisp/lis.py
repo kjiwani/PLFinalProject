@@ -65,7 +65,8 @@ def standard_env():
         'equal?':  op.eq, 
         'length':  len, 
         'list':    lambda *x: list(x), 
-        'list?':   lambda x: isinstance(x,list), 
+        'list?':   lambda x: isinstance(x,list),
+        'exec':    lambda x: eval(compile(x,'None','single')),
         'map':     map,
         'max':     max,
         'min':     min,
@@ -116,6 +117,8 @@ class Procedure(object):
 
 ################ eval
 
+toReturn = None
+
 def eval(x, env=global_env):
     "Evaluate an expression in an environment."
     if isinstance(x, Symbol):      # variable reference
@@ -132,7 +135,7 @@ def eval(x, env=global_env):
     elif x[0] == 'define':         # (define var exp)
         (_, var, exp) = x
         env[var] = eval(exp, env)
-    elif x[0] == 'let':
+    elif x[0] == 'let':            # let for Swift 
         (_, var, _, exp) = x
         env[var] = eval(exp, env)
     elif x[0] == 'set!':           # (set! var exp)
@@ -141,6 +144,11 @@ def eval(x, env=global_env):
     elif x[0] == 'lambda':         # (lambda (var...) body)
         (_, parms, body) = x
         return Procedure(parms, body, env)
+    elif x[0] == 'exec':
+        proc = eval(x[0], env)
+        import re
+        exec(proc(re.sub(r"^'|'$", '', x[1])))
+        return toReturn
     else:                          # (proc arg...)
         proc = eval(x[0], env)
         args = [eval(exp, env) for exp in x[1:]]
