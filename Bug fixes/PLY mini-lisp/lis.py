@@ -1,8 +1,14 @@
+# List of Bug Fixes 
+# add, subtraction, mulitply, divide are able to take in infinite number of arguments
+
+
+
 ################ Lispy: Scheme Interpreter in Python
 
 ## (c) Peter Norvig, 2010-14; See http://norvig.com/lispy.html
 
 ################ Types
+
 
 from __future__ import division
 
@@ -52,7 +58,7 @@ def standard_env():
     env = Env()
     env.update(vars(math)) # sin, cos, sqrt, pi, ...
     env.update({
-        '+':op.add, '-':op.sub, '*':op.mul, '/':op.div, 
+        '+': lambda *x: reduce(lambda z, y: z + y, x), '-':lambda *x: reduce(lambda z, y: z - y, x), '*':lambda *x: reduce(lambda z, y: z * y, x), '/':lambda *x: reduce(lambda z, y: z / y, x), 
         '>':op.gt, '<':op.lt, '>=':op.ge, '<=':op.le, '=':op.eq, 
         'abs':     abs,
         'append':  op.add,  
