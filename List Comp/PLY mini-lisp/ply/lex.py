@@ -40,6 +40,7 @@ import types
 import copy
 import os
 import inspect
+import java.lang
 
 # This tuple contains known string types
 try:

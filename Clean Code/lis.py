@@ -135,6 +135,9 @@ def eval(x, env=global_env):
     elif x[0] == 'define':         # (define var exp)
         (_, var, exp) = x
         env[var] = eval(exp, env)
+    elif x[0] == 'let':            # (let for swift)
+        (_, var, -, exp) = x
+        env[var] = eval(exp, env)
     elif x[0] == 'set!':           # (set! var exp)
         (_, var, exp) = x
         env.find(var)[var] = eval(exp, env)
