@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from yacc import yacc
 import cmd
+import java.lang
+
 
 class MiniLisp(cmd.Cmd):     # See https://docs.python.org/2/library/cmd.html
     """
@@ -41,4 +43,10 @@ class MiniLisp(cmd.Cmd):     # See https://docs.python.org/2/library/cmd.html
 
 if __name__ == '__main__':
         ml = MiniLisp()
+        
+        print "Stream Operations: "
+        import ListComprehension as LC
+        import lis
+        print lis.eval(LC)
+        
         ml.cmdloop()     # See https://docs.python.org/2/library/cmd.html
