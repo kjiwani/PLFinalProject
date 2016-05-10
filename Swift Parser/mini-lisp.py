@@ -66,8 +66,8 @@ class MiniLisp(cmd.Cmd):     # See https://docs.python.org/2/library/cmd.html
         """
         result = yacc.parse(line)
         print "result is: ", result
-        import lis
-        print lis.eval(result)
+        # import lis
+        print eval(result)
         
 #        s = lisp_str(result)
 #        if s != 'nil':

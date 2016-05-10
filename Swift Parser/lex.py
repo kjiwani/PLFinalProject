@@ -8,12 +8,17 @@ import ply.lex as lex
 
 # List of token names.   
 tokens = ('QUOTE', 'SIMB', 'NUM', 'LPAREN', 'RPAREN', \
-'NIL', 'TRUE', 'FALSE', 'TEXT')
+'NIL', 'TRUE', 'FALSE', 'TEXT', 'LET')
 
 # Reserved words
 reserved = {
     'nil' : 'NIL',
+    'let' : 'LET'
 }
+
+data = 'let orange = 2'
+
+
 
 # Regular expression rules for simple tokens
 t_LPAREN = r'\('
@@ -54,8 +59,18 @@ def t_error(t):
     print "Illegal character '%s'" % t.value[0]
     t.lexer.skip(1)
 
+
 # Build the lexer
-lex.lex()
+lexer = lex.lex()
+
+lexer.input(data)
+
+while True:
+    tok = lexer.token()
+    if not tok:
+        break
+    print(tok)
+
 
 if __name__ == '__main__':
     lex.runmain()
