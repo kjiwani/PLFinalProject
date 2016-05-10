@@ -12,37 +12,37 @@ Number = (int, float) # A Lisp Number is implemented as a Python int or float
 
 ################ Parsing: parse, tokenize, and read_from_tokens
 
-# def parse(program):
-#     "Read a Scheme expression from a string."
-#     return read_from_tokens(tokenize(program))
+def parse(program):
+    "Read a Scheme expression from a string."
+    return read_from_tokens(tokenize(program))
 
-# def tokenize(s):
-#     "Convert a string into a list of tokens."
-#     return s.replace('(',' ( ').replace(')',' ) ').split()
+def tokenize(s):
+    "Convert a string into a list of tokens."
+    return s.replace('(',' ( ').replace(')',' ) ').split()
 
-# def read_from_tokens(tokens):
-#     "Read an expression from a sequence of tokens."
-#     if len(tokens) == 0:
-#         raise SyntaxError('unexpected EOF while reading')
-#     token = tokens.pop(0)
-#     if '(' == token:
-#         L = []
-#         while tokens[0] != ')':
-#             L.append(read_from_tokens(tokens))
-#         tokens.pop(0) # pop off ')'
-#         return L
-#     elif ')' == token:
-#         raise SyntaxError('unexpected )')
-#     else:
-#         return atom(token)
+def read_from_tokens(tokens):
+    "Read an expression from a sequence of tokens."
+    if len(tokens) == 0:
+        raise SyntaxError('unexpected EOF while reading')
+    token = tokens.pop(0)
+    if '(' == token:
+        L = []
+        while tokens[0] != ')':
+            L.append(read_from_tokens(tokens))
+        tokens.pop(0) # pop off ')'
+        return L
+    elif ')' == token:
+        raise SyntaxError('unexpected )')
+    else:
+        return atom(token)
 
-# def atom(token):
-#     "Numbers become numbers; every other token is a symbol."
-#     try: return int(token)
-#     except ValueError:
-#         try: return float(token)
-#         except ValueError:
-#             return Symbol(token)
+def atom(token):
+    "Numbers become numbers; every other token is a symbol."
+    try: return int(token)
+    except ValueError:
+        try: return float(token)
+        except ValueError:
+            return Symbol(token)
 
 ################ Environments
 
@@ -65,8 +65,7 @@ def standard_env():
         'equal?':  op.eq, 
         'length':  len, 
         'list':    lambda *x: list(x), 
-        'list?':   lambda x: isinstance(x,list),
-        'exec':    lambda x: eval(compile(x,'None','single')),
+        'list?':   lambda x: isinstance(x,list), 
         'map':     map,
         'max':     max,
         'min':     min,
@@ -92,19 +91,19 @@ global_env = standard_env()
 
 ################ Interaction: A REPL
 
-# def repl(prompt='lis.py> '):
-#     "A prompt-read-eval-print loop."
-#     while True:
-#         val = eval(parse(raw_input(prompt)))
-#         if val is not None: 
-#             print(lispstr(val))
+def repl(prompt='lis.py> '):
+    "A prompt-read-eval-print loop."
+    while True:
+        val = eval(parse(raw_input(prompt)))
+        if val is not None: 
+            print(lispstr(val))
 
-# def lispstr(exp):
-#     "Convert a Python object back into a Lisp-readable string."
-#     if  isinstance(exp, list):
-#         return '(' + ' '.join(map(lispstr, exp)) + ')' 
-#     else:
-#         return str(exp)
+def lispstr(exp):
+    "Convert a Python object back into a Lisp-readable string."
+    if  isinstance(exp, list):
+        return '(' + ' '.join(map(lispstr, exp)) + ')' 
+    else:
+        return str(exp)
 
 ################ Procedures
 
@@ -116,8 +115,6 @@ class Procedure(object):
         return eval(self.body, Env(self.parms, args, self.env))
 
 ################ eval
-
-toReturn = None
 
 def eval(x, env=global_env):
     "Evaluate an expression in an environment."
@@ -135,17 +132,15 @@ def eval(x, env=global_env):
     elif x[0] == 'define':         # (define var exp)
         (_, var, exp) = x
         env[var] = eval(exp, env)
+    elif x[0] == 'var':
+        (_, var, _, exp) = x
+        env[var] = eval(exp, env)
     elif x[0] == 'set!':           # (set! var exp)
         (_, var, exp) = x
         env.find(var)[var] = eval(exp, env)
     elif x[0] == 'lambda':         # (lambda (var...) body)
         (_, parms, body) = x
         return Procedure(parms, body, env)
-    elif x[0] == 'exec':
-        proc = eval(x[0], env)
-        import re
-        exec(proc(re.sub(r"^'|'$", '', x[1])))
-        return toReturn
     else:                          # (proc arg...)
         proc = eval(x[0], env)
         args = [eval(exp, env) for exp in x[1:]]

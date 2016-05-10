@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from yacc import yacc
 import cmd
+import java.lang
+import ListComprehension as LC
 
 class MiniLisp(cmd.Cmd):     # See https://docs.python.org/2/library/cmd.html
     """
@@ -38,11 +40,6 @@ class MiniLisp(cmd.Cmd):     # See https://docs.python.org/2/library/cmd.html
         import lis
         r =  lis.eval(result)
         if r is not None: print r
-        '''
-        s = lisp_str(result)
-        if s != 'nil':
-            print s
-        '''
 
 if __name__ == '__main__':
         ml = MiniLisp()
