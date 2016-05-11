@@ -117,6 +117,7 @@ class Procedure(object):
 ################ eval
 
 def eval(x, env=global_env):
+    print(x)
     "Evaluate an expression in an environment."
     if isinstance(x, Symbol):      # variable reference
         return env.find(x)[x]
@@ -131,9 +132,6 @@ def eval(x, env=global_env):
         return eval(exp, env)
     elif x[0] == 'define':         # (define var exp)
         (_, var, exp) = x
-        env[var] = eval(exp, env)
-    elif x[0] == 'var':
-        (_, var, _, exp) = x
         env[var] = eval(exp, env)
     elif x[0] == 'set!':           # (set! var exp)
         (_, var, exp) = x
