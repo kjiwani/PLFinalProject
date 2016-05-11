@@ -8,16 +8,14 @@ import ply.lex as lex
 
 # List of token names.   
 tokens = ('QUOTE', 'SIMB', 'NUM', 'LPAREN', 'RPAREN', \
-'NIL', 'TRUE', 'FALSE', 'TEXT', 'LET')
+'NIL', 'TRUE', 'FALSE', 'TEXT', 'LET', 'PRINT')
 
 # Reserved words
 reserved = {
     'nil' : 'NIL',
-    'let' : 'LET'
+    'let' : 'LET',
+    'print' : 'PRINT'
 }
-
-data = 'let orange = 2'
-
 
 
 # Regular expression rules for simple tokens
@@ -36,14 +34,14 @@ def t_NUM(t):
         t.value = 0
     return t
 
-def t_SIMB(t):
-    r'[a-zA-Z_+=\*\-][a-zA-Z0-9_+\*\-]*'
-    t.type = reserved.get(t.value,'SIMB')    # Check for reserved words
+def t_TEXT(t):
+    r'\"{1}.*'
+    t.type = reserved.get(t.value,'TEXT')    # Check for reserved words
     return t
 
-def t_TEXT(t):
-    r'\'[a-zA-Z0-9_+\*\- :,]*\''
-    t.type = reserved.get(t.value,'TEXT')    # Check for reserved words
+def t_SIMB(t):
+    r'[a-zA-Z_+=\*\-\"\\\.][a-zA-Z0-9_+\*\-]*'
+    t.type = reserved.get(t.value,'SIMB')    # Check for reserved words
     return t
 
 # Define a rule so we can track line numbers
@@ -61,15 +59,10 @@ def t_error(t):
 
 
 # Build the lexer
-lexer = lex.lex()
+lex.lex()
 
-lexer.input(data)
 
-while True:
-    tok = lexer.token()
-    if not tok:
-        break
-    print(tok)
+
 
 
 if __name__ == '__main__':
