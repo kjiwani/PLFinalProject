@@ -1,0 +1,31 @@
+########Mini lisp code to copy/paste##########
+
+#For exec function examples
+
+(+ 1 (exec 'from java.lang import Math; toReturn = Math.max(23, 34)'))
+
+(+ 1 (exec 'import Addition; toReturn = Addition.add(23, 34)'))
+
+(exec 'import Multiplication; toReturn = Multiplication.multiply(5, 10)')
+
+(exec 'import SquareRoot; toReturn = SquareRoot.square(100)')
+
+#For List Comprehension
+(UPDATE 1 2 3 4 5 6)
+
+#For Java Streams
+(exec 'import streams; toReturn = streams.doStream([5, 10, 15, 20])')
+
+
+#For Swift Parser
+
+let apples = 3
+let oranges = 5
+let appleSummary = "I have \(apples) apples."
+let fruitSummary = "I have \(apples + oranges) pieces of fruit."
+print(appleSummary)
+print(fruitSummary)
+print(apples)
+print(oranges)
+
+
