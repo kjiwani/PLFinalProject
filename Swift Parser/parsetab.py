@@ -5,9 +5,15 @@ _tabversion = '3.8'
 
 _lr_method = 'LALR'
 
+<<<<<<< HEAD
 _lr_signature = '6ADEB20FF8378DA72AA77F37F2588A0B'
     
 _lr_action_items = {'RPAREN':([7,11,],[-4,17,]),'TEXT':([7,10,],[-4,12,]),'SIMB':([3,5,6,7,8,9,],[7,-6,7,-4,-9,7,]),'NUM':([7,10,],[-4,15,]),'LET':([0,],[5,]),'LPAREN':([2,4,],[-8,8,]),'PRINT':([0,],[2,]),'$end':([1,12,13,14,15,16,17,],[0,-7,-1,-2,-5,-3,-10,]),}
+=======
+_lr_signature = '51D644FE78ADCEDE08E2E4EEFE6045B0'
+    
+_lr_action_items = {'$end':([1,7,8,],[0,-1,-3,]),'NUM':([4,6,],[-2,8,]),'SIMB':([2,3,4,5,],[4,-4,-2,4,]),'LET':([0,],[3,]),}
+>>>>>>> 4750050fe165cb8237bc2ac477de6e3401e70900
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -16,7 +22,11 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
+<<<<<<< HEAD
 _lr_goto_items = {'rparen':([11,],[16,]),'ast':([0,],[1,]),'text':([10,],[14,]),'simb':([3,6,9,],[6,10,11,]),'num':([10,],[13,]),'let':([0,],[3,]),'lparen':([4,],[9,]),'print':([0,],[4,]),}
+=======
+_lr_goto_items = {'ast':([0,],[1,]),'num':([6,],[7,]),'let':([0,],[2,]),'simb':([2,5,],[5,6,]),}
+>>>>>>> 4750050fe165cb8237bc2ac477de6e3401e70900
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,6 +36,7 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> ast","S'",1,None,None,None),
+<<<<<<< HEAD
   ('ast -> let simb simb num','ast',4,'p_ast_let','yacc.py',8),
   ('ast -> let simb simb text','ast',4,'p_ast_let','yacc.py',9),
   ('ast -> print lparen simb rparen','ast',4,'p_ast_print','yacc.py',15),
@@ -36,4 +47,10 @@ _lr_productions = [
   ('print -> PRINT','print',1,'p_print','yacc.py',42),
   ('lparen -> LPAREN','lparen',1,'p_lparen','yacc.py',46),
   ('rparen -> RPAREN','rparen',1,'p_rparen','yacc.py',50),
+=======
+  ('ast -> let simb simb num','ast',4,'p_ast','yacc.py',206),
+  ('simb -> SIMB','simb',1,'p_simbol','yacc.py',215),
+  ('num -> NUM','num',1,'p_num','yacc.py',223),
+  ('let -> LET','let',1,'p_let','yacc.py',251),
+>>>>>>> 4750050fe165cb8237bc2ac477de6e3401e70900
 ]

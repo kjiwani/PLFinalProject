@@ -2,15 +2,26 @@ Created by PLY version 3.8 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
+<<<<<<< HEAD
     NIL
     QUOTE
     FALSE
     TRUE
+=======
+    QUOTE
+    LPAREN
+    TRUE
+    TEXT
+    RPAREN
+    NIL
+    FALSE
+>>>>>>> 4750050fe165cb8237bc2ac477de6e3401e70900
 
 Grammar
 
 Rule 0     S' -> ast
 Rule 1     ast -> let simb simb num
+<<<<<<< HEAD
 Rule 2     ast -> let simb simb text
 Rule 3     ast -> print lparen simb rparen
 Rule 4     simb -> SIMB
@@ -20,10 +31,16 @@ Rule 7     text -> TEXT
 Rule 8     print -> PRINT
 Rule 9     lparen -> LPAREN
 Rule 10    rparen -> RPAREN
+=======
+Rule 2     simb -> SIMB
+Rule 3     num -> NUM
+Rule 4     let -> LET
+>>>>>>> 4750050fe165cb8237bc2ac477de6e3401e70900
 
 Terminals, with rules where they appear
 
 FALSE                : 
+<<<<<<< HEAD
 LET                  : 6
 LPAREN               : 9
 NIL                  : 
@@ -33,12 +50,23 @@ QUOTE                :
 RPAREN               : 10
 SIMB                 : 4
 TEXT                 : 7
+=======
+LET                  : 4
+LPAREN               : 
+NIL                  : 
+NUM                  : 3
+QUOTE                : 
+RPAREN               : 
+SIMB                 : 2
+TEXT                 : 
+>>>>>>> 4750050fe165cb8237bc2ac477de6e3401e70900
 TRUE                 : 
 error                : 
 
 Nonterminals, with rules where they appear
 
 ast                  : 0
+<<<<<<< HEAD
 let                  : 1 2
 lparen               : 3
 num                  : 1
@@ -46,6 +74,11 @@ print                : 3
 rparen               : 3
 simb                 : 1 1 2 2 3
 text                 : 2
+=======
+let                  : 1
+num                  : 1
+simb                 : 1 1
+>>>>>>> 4750050fe165cb8237bc2ac477de6e3401e70900
 
 Parsing method: LALR
 
@@ -53,6 +86,7 @@ state 0
 
     (0) S' -> . ast
     (1) ast -> . let simb simb num
+<<<<<<< HEAD
     (2) ast -> . let simb simb text
     (3) ast -> . print lparen simb rparen
     (6) let -> . LET
@@ -64,6 +98,14 @@ state 0
     ast                            shift and go to state 1
     let                            shift and go to state 3
     print                          shift and go to state 4
+=======
+    (4) let -> . LET
+
+    LET             shift and go to state 3
+
+    ast                            shift and go to state 1
+    let                            shift and go to state 2
+>>>>>>> 4750050fe165cb8237bc2ac477de6e3401e70900
 
 state 1
 
@@ -73,39 +115,69 @@ state 1
 
 state 2
 
+<<<<<<< HEAD
     (8) print -> PRINT .
 
     LPAREN          reduce using rule 8 (print -> PRINT .)
+=======
+    (1) ast -> let . simb simb num
+    (2) simb -> . SIMB
 
+    SIMB            shift and go to state 4
+>>>>>>> 4750050fe165cb8237bc2ac477de6e3401e70900
+
+    simb                           shift and go to state 5
 
 state 3
 
+<<<<<<< HEAD
     (1) ast -> let . simb simb num
     (2) ast -> let . simb simb text
     (4) simb -> . SIMB
 
     SIMB            shift and go to state 7
+=======
+    (4) let -> LET .
+
+    SIMB            reduce using rule 4 (let -> LET .)
+>>>>>>> 4750050fe165cb8237bc2ac477de6e3401e70900
 
     simb                           shift and go to state 6
 
 state 4
 
+<<<<<<< HEAD
     (3) ast -> print . lparen simb rparen
     (9) lparen -> . LPAREN
 
     LPAREN          shift and go to state 8
+=======
+    (2) simb -> SIMB .
+
+    SIMB            reduce using rule 2 (simb -> SIMB .)
+    NUM             reduce using rule 2 (simb -> SIMB .)
+>>>>>>> 4750050fe165cb8237bc2ac477de6e3401e70900
 
     lparen                         shift and go to state 9
 
 state 5
 
+<<<<<<< HEAD
     (6) let -> LET .
 
     SIMB            reduce using rule 6 (let -> LET .)
+=======
+    (1) ast -> let simb . simb num
+    (2) simb -> . SIMB
 
+    SIMB            shift and go to state 4
+>>>>>>> 4750050fe165cb8237bc2ac477de6e3401e70900
+
+    simb                           shift and go to state 6
 
 state 6
 
+<<<<<<< HEAD
     (1) ast -> let simb . simb num
     (2) ast -> let simb . simb text
     (4) simb -> . SIMB
@@ -122,10 +194,25 @@ state 7
     TEXT            reduce using rule 4 (simb -> SIMB .)
     SIMB            reduce using rule 4 (simb -> SIMB .)
     RPAREN          reduce using rule 4 (simb -> SIMB .)
+=======
+    (1) ast -> let simb simb . num
+    (3) num -> . NUM
+
+    NUM             shift and go to state 8
+
+    num                            shift and go to state 7
+
+state 7
+
+    (1) ast -> let simb simb num .
+
+    $end            reduce using rule 1 (ast -> let simb simb num .)
+>>>>>>> 4750050fe165cb8237bc2ac477de6e3401e70900
 
 
 state 8
 
+<<<<<<< HEAD
     (9) lparen -> LPAREN .
 
     SIMB            reduce using rule 9 (lparen -> LPAREN .)
@@ -203,3 +290,9 @@ state 17
 
     $end            reduce using rule 10 (rparen -> RPAREN .)
 
+=======
+    (3) num -> NUM .
+
+    $end            reduce using rule 3 (num -> NUM .)
+
+>>>>>>> 4750050fe165cb8237bc2ac477de6e3401e70900
