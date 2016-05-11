@@ -92,20 +92,24 @@ def let(x1, x2, x3):
                 total = sum(newitems)
                 x3 = x3.replace("\(" + variable + ")", str(total))
                 dictionary[x1] = x3
-                print(dictionary)
+                # print(dictionary)
                 return
-            else:
-                if variable in dictionary:
-                    value = dictionary[variable]
+            elif variable in dictionary:
+                value = dictionary[variable]
                 x3 = x3.replace("\(" + variable + ")", str(value))
                 dictionary[x1] = x3
-                print dictionary
+                # print dictionary
                 return
+            else:
+                dictionary[x1] = x3
         else:
             dictionary[x1] = x3
-            print(dictionary)
+            # print(dictionary)
             return
-   
+
+def _print(x1):
+    if x1 in dictionary:
+        print(dictionary[x1])
 
 
 
@@ -131,8 +135,9 @@ def eval(x, env=global_env):
     elif x[0] == 'let':
         result = let(x[1], x[2], x[3])
         return result
-        # (_, var, _, exp) = x
-        # env[var] = eval(exp, env)
+    elif x[0] == 'print':
+        result = _print(x[1])
+        return result
     elif x[0] == 'set!':           # (set! var exp)
         (_, var, exp) = x
         env.find(var)[var] = eval(exp, env)

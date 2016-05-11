@@ -4,13 +4,17 @@ import ply.yacc as yacc
 from lex import tokens
 
 
-def p_ast(p):
+def p_ast_let(p):
     '''ast : let simb simb num 
            | let simb simb text
     '''
     ast = [p[1], p[2], p[3], p[4]]
     p[0] = ast
 
+def p_ast_print(p):
+    'ast : print lparen simb rparen'
+    ast = [p[1], p[3]]
+    p[0] = ast
 
 def p_simbol(p):
     'simb : SIMB'
@@ -34,7 +38,17 @@ def p_text(p):
     'text : TEXT'
     p[0] = p[1]
 
+def p_print(p):
+    'print : PRINT'
+    p[0] = p[1]
 
+def p_lparen(p):
+    'lparen : LPAREN'
+    p[0] = p[1]
+
+def p_rparen(p):
+    'rparen : RPAREN'
+    p[0] = p[1]
 
 yacc.yacc()
 
