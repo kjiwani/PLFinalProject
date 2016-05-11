@@ -1,6 +1,3 @@
 # PLFinalProject
 
-Hello, World!
-
-
-The folder 'Clean code' runs fpr #2
+Link to power point presentation: https://docs.google.com/presentation/d/1EZYZH-XFawppK3S3Qx_2SeenoBDFegvylU0maJBryKg/edit?usp=sharing
