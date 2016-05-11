@@ -14,6 +14,15 @@ Number = (int, float) # A Lisp Number is implemented as a Python int or float
 
 ################ Parsing: parse, tokenize, and read_from_tokens
 
+class Closure(object):
+    def start_exec(self):
+        def end_exec(self, x):
+            return eval(compile(x,'None','single'))
+        return end_exec
+    run = start_exec(1)
+
+
+
 def parse(program):
     "Read a Scheme expression from a string."
     return read_from_tokens(tokenize(program))
@@ -49,12 +58,7 @@ def atom(token):
 ################ Environments
 
 def standard_env():
-
-    def start_exec():
-        def end_exec(x):
-            return eval(compile(x,'None','single'))
-        return end_exec
-
+    c1 = Closure()
     "An environment with some Scheme standard procedures."
     import math, operator as op
     env = Env()
@@ -74,7 +78,7 @@ def standard_env():
         'length':  len, 
         'list':    lambda *x: list(x), 
         'list?':   lambda x: isinstance(x,list),
-        'exec':    start_exec(),
+        'exec':    c1.run,
         'map':     map,
         'max':     max,
         'min':     min,
