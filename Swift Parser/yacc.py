@@ -7,13 +7,13 @@ DEBUG = True
 
 # Namespace & built-in functions
 
-func_dict = {}
+# func_dict = {}
 
-def let(x1, x2, x3):
-    if x1 in func_dict: 
-        return "this variable is already taken"
-    else: 
-        func_dict[x1] = x3
+# def let(x1, x2, x3):
+#     if x1 in func_dict: 
+#         return "this variable is already taken"
+#     else: 
+#         func_dict[x1] = x3
 
 
 
@@ -117,23 +117,23 @@ def let(x1, x2, x3):
 # def is_list(l):
 #     return type(l) == type([])
 
-def lisp_str(l):
-    if type(l) == type([]):
-        if not l:
-            return "()"
-        r = "("
-        for i in l[:-1]:
-            r += lisp_str(i) + " "
-        r += lisp_str(l[-1]) + ")"
-        return r
-    elif l is True:
-        return "#t"
-    elif l is False:
-        return "#f"
-    elif l is None:
-        return 'nil'
-    else:
-        return str(l)
+# def lisp_str(l):
+#     if type(l) == type([]):
+#         if not l:
+#             return "()"
+#         r = "("
+#         for i in l[:-1]:
+#             r += lisp_str(i) + " "
+#         r += lisp_str(l[-1]) + ")"
+#         return r
+#     elif l is True:
+#         return "#t"
+#     elif l is False:
+#         return "#f"
+#     elif l is None:
+#         return 'nil'
+#     else:
+#         return str(l)
 
 # BNF
 
@@ -202,21 +202,25 @@ def lisp_str(l):
 #     print "ast is: ", ast
 #     p[0] = ast
 
-def p_let(p):
-    'call : LET SIMB SIMB NUM'
-    p[0] = let(p[2], p[3], p[4])
+def p_ast(p):
+    'ast : let simb simb num'
+    ast = [p[1], p[2], p[3], p[4]]
+    p[0] = ast
 
+# def p_simbs(p):
+#     'simbs : SIMB SIMB'
+#     p[0] = [p[1], p[2]]
 
-def p_atom_simbol(p):
-    'atom : SIMB'
+def p_simbol(p):
+    'simb : SIMB'
     p[0] = p[1]
 
 # def p_atom_bool(p):
 #     'atom : bool'
 #     p[0] = p[1]
 
-def p_atom_num(p):
-    'atom : NUM'
+def p_num(p):
+    'num : NUM'
     p[0] = p[1]
 
 # def p_atom_word(p):
@@ -239,12 +243,12 @@ def p_atom_num(p):
 #     'atom : NIL'
 #     p[0] = None
 
-# # Error rule for syntax errors
-# def p_error(p):
-#     print "Syntax error!! ",p
+# Error rule for syntax errors
+def p_error(p):
+    print "Syntax error!! ",p
 
 def p_let(p):
-    'atom : LET'
+    'let : LET'
     p[0] = p[1]
 
 
