@@ -134,6 +134,7 @@ def eval(x, env=global_env):
     elif x[0] == 'quote':          # (quote exp)
         (_, exp) = x
         return exp
+    #Doesn't handle the if like it should.
     elif x[0] == 'if':             # (if test conseq alt)
         (_, test, conseq, alt) = x
         exp = (conseq if eval(test, env) else alt)
@@ -152,6 +153,12 @@ def eval(x, env=global_env):
         import re
         exec(proc(re.sub(r"^'|'$", '', x[1])))
         return toReturn
+    elif x[0] == "sin":
+        import math
+        return math.sin(x[1])
+    elif x[0] == "cos":
+        import math
+        return math.cos(x[1])
     else:                          # (proc arg...)
         proc = eval(x[0], env)
         args = [eval(exp, env) for exp in x[1:]]
