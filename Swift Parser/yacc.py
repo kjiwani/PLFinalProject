@@ -7,105 +7,115 @@ DEBUG = True
 
 # Namespace & built-in functions
 
-name = {}
-let_dict = {} 
+func_dict = {}
 
-global ast
-ast = []
+def let(x1, x2, x3):
+    if x1 in func_dict: 
+        return "this variable is already taken"
+    else: 
+        func_dict[x1] = x3
 
-def cons(l):
-    return [l[0]] + l[1]
 
-name['cons'] = cons
 
-def concat(l):
-    return l[0] + l[1]
+# name = {}
+# let_dict = {} 
 
-name['concat'] = concat
+# global ast
+# ast = []
 
-def listar(l):
-    return l
+# def cons(l):
+#     return [l[0]] + l[1]
 
-name['list'] = listar
+# name['cons'] = cons
 
-def car(l):
-    return l[0][0]
+# def concat(l):
+#     return l[0] + l[1]
 
-name['car'] = car
+# name['concat'] = concat
 
-def cdr(l):
-    return l[0][1:]
+# def listar(l):
+#     return l
 
-name['cdr'] = cdr
+# name['list'] = listar
 
-def eq(l):
-    return l[0] == l[1]
+# def car(l):
+#     return l[0][0]
 
-name['eq'] = eq
-name['='] = eq
+# name['car'] = car
 
-def _and(l):
-    return not False in l
+# def cdr(l):
+#     return l[0][1:]
 
-name['and'] = _and
+# name['cdr'] = cdr
 
-def _or(l):
-    return True in l
+# def eq(l):
+#     return l[0] == l[1]
 
-name['or'] = _or
+# name['eq'] = eq
+# name['='] = eq
 
-def cond(l):
-    if l[0]:
-        return l[1]
+# def _and(l):
+#     return not False in l
 
-name['cond'] = cond
+# name['and'] = _and
 
-def add(l):
-    return sum(l)
+# def _or(l):
+#     return True in l
 
-name['+'] = add
+# name['or'] = _or
 
-def minus(l):
-    '''Unary minus'''
-    return -l[0]
+# def cond(l):
+#     if l[0]:
+#         return l[1]
 
-name['-'] = minus
+# name['cond'] = cond
 
-def _print(l):
-    print lisp_str(l[0])
+# def add(l):
+#     return sum(l)
 
-name['print'] = _print
+# name['+'] = add
 
-#  Evaluation functions
+# def minus(l):
+#     '''Unary minus'''
+#     return -l[0]
 
-def lisp_eval(simb, items):
-   if simb in name:
-       return call(name[simb], eval_lists(items))
-   else:
-    return [simb] + items
+# name['-'] = minus
 
-def call(f, l):
-    try:
-        return f(eval_lists(l))
-    except TypeError:
-        return f
+# def _print(l):
+#     print lisp_str(l[0])
 
-def eval_lists(l):
-    r = []
-    for i in l:
-        if is_list(i):
-            if i:
-                r.append(lisp_eval(i[0], i[1:]))
-            else:
-                r.append(i)
-        else:
-            r.append(i)
-    return r
+# name['print'] = _print
 
-# Utilities functions
+# #  Evaluation functions
 
-def is_list(l):
-    return type(l) == type([])
+# def lisp_eval(simb, items):
+#    if simb in name:
+#        return call(name[simb], eval_lists(items))
+#    else:
+#     return [simb] + items
+
+# def call(f, l):
+#     try:
+#         return f(eval_lists(l))
+#     except TypeError:
+#         return f
+
+# def eval_lists(l):
+#     r = []
+#     for i in l:
+#         if is_list(i):
+#             if i:
+#                 r.append(lisp_eval(i[0], i[1:]))
+#             else:
+#                 r.append(i)
+#         else:
+#             r.append(i)
+#     return r
+
+# # Utilities functions
+
+# def is_list(l):
+#     return type(l) == type([])
 
 def lisp_str(l):
     if type(l) == type([]):
@@ -192,9 +202,9 @@ def lisp_str(l):
 #     print "ast is: ", ast
 #     p[0] = ast
 
-def p_call(p):
+def p_let(p):
     'call : LET SIMB SIMB NUM'
-    p[0] = call()
+    p[0] = let(p[2], p[3], p[4])
 
 
 def p_atom_simbol(p):

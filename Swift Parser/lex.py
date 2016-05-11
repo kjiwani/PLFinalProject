@@ -16,7 +16,6 @@ reserved = {
     'let' : 'LET'
 }
 
-data = 'let orange = 2'
 
 
 
@@ -61,15 +60,9 @@ def t_error(t):
 
 
 # Build the lexer
-lexer = lex.lex()
+lex.lex()
 
-lexer.input(data)
 
-while True:
-    tok = lexer.token()
-    if not tok:
-        break
-    print(tok)
 
 
 if __name__ == '__main__':
